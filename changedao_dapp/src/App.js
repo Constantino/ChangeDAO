@@ -211,7 +211,7 @@ function App() {
 
   return (
     <div className="mint-nft">
-      <h1>Welcome to Change DAO! the place to make proposals to change and impact positively your community</h1>
+      <h1>Welcome to Change Dao! A platform to make proposals that impact your commmunity in a positive ways.</h1>
       <div className="btn-hero">
         <Web3Button
           colorMode="dark"
