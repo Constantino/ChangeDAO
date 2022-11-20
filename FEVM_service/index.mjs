@@ -24,7 +24,7 @@ app.post("/recordProposal", async (req, res) => {
     
     const { senderAddress, name, description } = req.body;
   
-    const { url } = await storeNFT(1);
+    const { url } = await storeNFT(name, description);
   
     const provider = new ethers.providers.JsonRpcProvider("https://wallaby.node.glif.io/rpc/v0");
     const address = process.env.WALLET_ADDRESS;
@@ -52,6 +52,7 @@ app.post("/recordProposal", async (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*").status(200).send("done");
   } catch (error) {
+    console.error(error);
     res.header("Access-Control-Allow-Origin", "*").status(500).send("server error");
   }
 
@@ -60,8 +61,8 @@ app.post("/recordProposal", async (req, res) => {
 
 app.post("/upload/nft", async (req, res) => {
   console.log("req", req.body);
-  const { id } = req.body;
-  const result = await storeNFT(id);
+  const { name, desc } = req.body;
+  const result = await storeNFT(name, desc);
   res.header("Access-Control-Allow-Origin", "*").status(200).send(result);
 });
 

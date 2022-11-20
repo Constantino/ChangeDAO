@@ -14,124 +14,31 @@ import path from "path";
 // Paste your NFT.Storage API key into the quotes:
 const NFT_STORAGE_KEY = "";
 
-const event_nfts = [
-  {
-    img: "banksy.png",
-    name: "Event 1",
-    description: "This is the description event with lots of marketing stuff.",
-  },
-  {
-    img: "banksy.png",
-    name: "Event 2",
-    description: "This is the description event with lots of marketing stuff.",
-  },
-];
-
 const NEW_EVENT_NFTS = [
   {
     id: 1,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The Merge",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "15 Sep",
-    price: 1534,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Garo",
-    ownerAvatar: "",
+    img: "ProposalNFTImage.png",
+    name: "ChangeDAO",
+    description: "DAO change offers the public the ability to promote the petitions they care about to potential signers"
   },
   {
     id: 2,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The ChainLinkers",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "22 Sep",
-    price: 250,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Constantino",
-    ownerAvatar: "",
+    img: "ProposalNFTImage.png",
+    name: "ETHOverEverything",
+    description: "New decisions on crypto currencies. Let’s support digital currency to be legalized worldwide."
   },
   {
     id: 3,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "Green Day",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "1 Oct",
-    price: 200,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Isaac",
-    ownerAvatar: "",
+    img: "ProposalNFTImage.png",
+    name: "Keepgaspriceslow",
+    description: "Enough is Enough, Layer 1 must support and prioritize everyday people, no more high gas prices."
   },
   {
     id: 4,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "Bad Bunny",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "10 Oct",
-    price: 100,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Andrés",
-    ownerAvatar: "",
-  },
-  {
-    id: 5,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The Strokes",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "20 Oct",
-    price: 1000,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Andrés",
-    ownerAvatar: "",
-  },
-  {
-    id: 6,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The Merge",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "30 Oct",
-    price: 500,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Isaac",
-    ownerAvatar: "",
-  },
-  {
-    id: 7,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The Merge",
-    evtTitle2: "Ethereum Live: The Merge",
-    location: "Crypto.com Arena",
-    date: "5 Nov",
-    price: 400,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Constantino",
-    ownerAvatar: "",
-  },
-  {
-    id: 8,
-    img: "banksy.png",
-    description: "This is the description event with lots of marketing stuff.",
-    evtTitle1: "The ETHKillers",
-    evtTitle2: "",
-    location: "Crypto.com Arena",
-    date: "1 Apr",
-    price: 450,
-    duration: "10:00 PM - 01:00 AM",
-    ownerName: "Garo",
-    ownerAvatar: "",
-  },
+    img: "ProposalNFTImage.png",
+    name: "protectouraddresses",
+    description: "ZKP’s takes privacy protection to a whole new level!!"
+  }
 ];
 
 /**
@@ -140,15 +47,12 @@ const NEW_EVENT_NFTS = [
  * @param {string} name a name for the NFT
  * @param {string} description a text description for the NFT
  */
-export default async function storeNFT(passed_id) {
-  // load the file from disk
-  let found_event = NEW_EVENT_NFTS.find((evt) => evt.id == passed_id);
-
+export default async function storeNFT(name, description) {
+  console.log("name: ", name, " desc: ", description);
   const image = await fileFromPath(
-    `./services/assets/0${passed_id}_NFT_Gif.gif`
+    `./services/assets/ProposalNFTImage.png`
   );
-  const name = found_event.evtTitle1;
-  const description = found_event.description;
+
 
   // create a new NFTStorage client using our API key
   let tokenAPI = process.env.NFT_STORAGE_API_KEY;
