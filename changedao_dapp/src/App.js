@@ -32,18 +32,7 @@ function App() {
     return str.substring(0, 6) + '...' + str.substring(str.length -4);
   }
 
-  const ButtonWithIconsFunction = (e, name) => {
-    setCreateAProposal(!createAProposal);
-  };
-
-  const TextLabelFunction = (e, name) => {
-    alert(`${name} was clicked`);
-  };
   
-  const TextLabel1Function = (e, name) => {
-    alert(`${name} was clicked`);
-  };
-
   useEffect(() => {
     if(!hasClaimedNFT) {
       return;
@@ -61,6 +50,59 @@ function App() {
     getAllProposals();
   }, [hasClaimedNFT, vote]);
 
+  const [proposalName, setProposalName] = useState('');
+  const [proposalDesc, setProposalDesc] = useState('');
+
+  const handleNameChange = event => {
+    setProposalName(event.target.value);
+
+    console.log('value is:', event.target.value);
+  };
+
+  const handleDescChange = event => {
+    setProposalDesc(event.target.value);
+
+    console.log('value is:', event.target.value);
+  };
+
+  const ButtonWithIconsFunction = (e, name) => {
+    setCreateAProposal(!createAProposal);
+  };
+
+  const TextLabelFunction = (e, name) => {
+    alert(`${name} was clicked`);
+  };
+  
+  const TextLabel1Function = (e, _name, _desc) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "senderAddress": address,
+      "name": proposalName,
+      "description": proposalDesc
+    });
+
+    console.log("raw: ", raw);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8080/recordProposal", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+      setCreateAProposal(false);
+  };
+
+
+
+
   if(createAProposal) {
 
     return (
@@ -69,10 +111,10 @@ function App() {
           <FlexColumn1>
             <TextLabel2>Create your proposal</TextLabel2>
             <label><h1>Name</h1></label>
-            <input type="text" name="name"/>
+            <input type="text" name="name" id="name" value={proposalName} onChange={handleNameChange}/>
             <br />
             <label><h1>Description</h1></label>
-            <input type="text" name="description"/>
+            <input type="text" name="description" id="description" value={proposalDesc} onChange={handleDescChange}/>
             
             {/* <ButtonWithIcons
               onClick={(e) => ButtonWithIconsFunction(e, "ButtonWithIcons")}
