@@ -13,7 +13,7 @@ function App() {
 
   const editionDropAddress = "0xa8B4066b511Ac514c5d7089dc67Ce6A7bADd0EA8";
   const { contract: token } = useContract("0x15E0508363110be4a9786814a050caB0F4dC3074", "token");
-  const { contract: vote } = useContract("0x84036E1a30Fb329db2ec5660DD8e0Dc44af1eB45", "vote");
+  const { contract: vote } = useContract("0x39C9fac6044563c117eCB6A5fa349681E653B3Bf", "vote");
   const { contract: editionDrop } = useContract(editionDropAddress, "edition-drop");
 
   const { data: nftBalance } = useNFTBalance(editionDrop, address, "0");
