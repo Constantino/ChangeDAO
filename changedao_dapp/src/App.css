@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+.ConnectWallet {
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  color: #06b6d4;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: SF Pro;
+  line-height: 36px;
+  white-space: nowrap;
+  border-width: 0px;
+  border-radius: 76px;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-style: solid;
+  border-color: #06b6d4;
+  box-sizing: content-box;
+  background-color: #000000;
+  cursor: pointer;
+}

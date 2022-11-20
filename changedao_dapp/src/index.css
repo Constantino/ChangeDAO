@@ -5,9 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.landing,
+.connect-wallet,
+.mint-nft,
+.member-page {
+  flex-direction: column;
+  width: 960px;
+  max-width: calc(100% - 1rem);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin: auto;
+  align-content: center;
+  display: flex;
+  text-align: center;
 }
