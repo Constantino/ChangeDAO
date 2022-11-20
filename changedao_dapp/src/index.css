@@ -8,6 +8,15 @@ body {
   background-color: #000000;
 }
 
+h1 {
+  
+  color: #00ffc1;
+  font-size: 48px;
+  font-weight: 700;
+  font-family: SF Pro;
+  
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
