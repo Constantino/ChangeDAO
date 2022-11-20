@@ -36,6 +36,14 @@ function App() {
     setCreateAProposal(!createAProposal);
   };
 
+  const TextLabelFunction = (e, name) => {
+    alert(`${name} was clicked`);
+  };
+  
+  const TextLabel1Function = (e, name) => {
+    alert(`${name} was clicked`);
+  };
+
   useEffect(() => {
     if(!hasClaimedNFT) {
       return;
@@ -60,23 +68,23 @@ function App() {
           
           <FlexColumn1>
             <TextLabel2>Create your proposal</TextLabel2>
-            <CadetBlueFlexColumn>
-              <OsalName>Proposal Name</OsalName>
-            </CadetBlueFlexColumn>
-            <CadetBlueFlexColumn1>
-              <OsalName>Description</OsalName>
-            </CadetBlueFlexColumn1>
-            <ButtonWithIcons
+            <label><h1>Name</h1></label>
+            <input type="text" name="name"/>
+            <br />
+            <label><h1>Description</h1></label>
+            <input type="text" name="description"/>
+            
+            {/* <ButtonWithIcons
               onClick={(e) => ButtonWithIconsFunction(e, "ButtonWithIcons")}
             >
               <ItemWrapper>
                 <Icon src={`https://file.rendit.io/n/R6p9ZsBKb5IWl2msce7u.svg`} />
                 <TextLabel3>Upload</TextLabel3>
               </ItemWrapper>
-            </ButtonWithIcons>
-            {/* <TextLabel1 onClick={(e) => TextLabel1Function(e, "TextLabel1")}>
+            </ButtonWithIcons> */}
+            <TextLabel1 onClick={(e) => TextLabel1Function(e, "TextLabel1")}>
               Submit proposal
-            </TextLabel1> */}
+            </TextLabel1>
           </FlexColumn1>
         </MacBookProRootRootRoot>
     )
@@ -117,13 +125,7 @@ function App() {
     };
 
 
-    const TextLabelFunction = (e, name) => {
-      alert(`${name} was clicked`);
-    };
     
-    const TextLabel1Function = (e, name) => {
-      alert(`${name} was clicked`);
-    };
 
     return (
       <div>
@@ -291,6 +293,7 @@ const TextLabel = styled.button`
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
   } ;
 `;
+
 const TextLabel4 = styled.button`
   gap: 10px;
   display: flex;
