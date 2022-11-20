@@ -18,7 +18,34 @@ function App() {
 
   const { data: nftBalance } = useNFTBalance(editionDrop, address, "0");
 
+  const hasClaimedNFT = useMemo(() => {
+    return nftBalance && nftBalance.gt(0)
+  }, [nftBalance]);
 
+  const [proposals, setProposals] = useState([]);
+  const [isVoting, setIsVoting] = useState();
+  const [hasVoted, setHasVoted] = useState();
+
+  const shortenAddress = (str) => {
+    return str.substring(0, 6) + '...' + str.substring(str.length -4);
+  }
+
+  useEffect(() => {
+    if(!hasClaimedNFT) {
+      return;
+    }
+
+    const getAllProposals = async () => {
+      try {
+        const proposals = await vote.getAll();
+        setProposals(proposals);
+        console.log("Proposals:", proposals);
+      } catch (error) {
+        console.log("Failed to get proposals", error);
+      }
+    };
+    getAllProposals();
+  }, [hasClaimedNFT, vote]);
 
   if(!address) {
     return (
@@ -34,6 +61,57 @@ function App() {
         </div>
       </div>
     );
+  }
+
+
+  if(hasClaimedNFT) {
+    const voteFunction = async (e, id, type) => {
+      alert(`${id} was voted, voteType: ${type}`);
+
+      const proposal = await vote.get(id);
+      // then we check if the proposal is open for voting (state === 1 means it is open)
+      if (proposal.state === 1) {
+        // if it is open for voting, we'll vote on it
+        vote.vote(id, type);
+      }
+
+      if (proposal.state === 4) {
+        vote.execute(id);
+      }
+
+    };
+    return (
+      <VotingForumRootRootRoot>
+      <TextLabel8>
+        Connected
+      </TextLabel8>
+      <FlexColumn>
+        <h1>Active Proposals</h1>
+        {proposals.map((proposal) => (
+          <CadetBlueFlexRow>
+          <FlexColumn1>
+            <OsalName>Proposal Name</OsalName>
+            <Text1>{ shortenAddress(proposal.proposalId.toString())}</Text1>
+          </FlexColumn1>
+          <FlexColumn2>
+            <Text2>Description</Text2>
+            <Paragraph>
+            {proposal.description}
+              <br />
+            </Paragraph>
+          </FlexColumn2>
+          <TextLabel onClick={(e) => voteFunction(e, proposal.proposalId, 1)}>
+            YES
+          </TextLabel>
+          <TextLabel4 onClick={(e) => voteFunction(e, proposal.proposalId, 0)}>
+            NO
+          </TextLabel4>
+        </CadetBlueFlexRow>
+        ))}  
+          
+      </FlexColumn>
+    </VotingForumRootRootRoot>    
+    )
   }
 
   return (
@@ -62,3 +140,183 @@ function App() {
 }
 
 export default App;
+
+
+const CadetBlueFlexRow = styled.div`
+  width: 862px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 25px 25px 32px 25px;
+  border-radius: 10px;
+  background-color: rgba(173, 173, 173, 0.3);
+  margin: 10px;
+`;
+const FlexColumn1 = styled.div`
+  width: 200px;
+  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0px 65px 0px 0px;
+`;
+const OsalName = styled.div`
+  width: 112px;
+  height: 18px;
+  color: rgba(173, 173, 173, 0.71);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: SF Pro;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: -0.88px;
+`;
+const Text1 = styled.div`
+  width: 200px;
+  height: 47px;
+  align-self: stretch;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: SF Pro;
+  line-height: 24px;
+`;
+const FlexColumn2 = styled.div`
+  width: 367px;
+  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0px 60px 0px 0px;
+`;
+const Text2 = styled.div`
+  width: 85px;
+  height: 18px;
+  color: rgba(173, 173, 173, 0.71);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: SF Pro;
+  line-height: 16px;
+  letter-spacing: -0.88px;
+`;
+const Paragraph = styled.div`
+  width: 367px;
+  height: 47px;
+  align-self: stretch;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: SF Pro;
+  line-height: 16px;
+  letter-spacing: -0.16px;
+`;
+const TextLabel = styled.button`
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: flex-end;
+  align-items: center;
+  margin: 0px 25px 18px 0px;
+  padding: 0px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: SF Pro;
+  line-height: 24px;
+  white-space: nowrap;
+  border-width: 0px;
+  border-radius: 4px;
+  box-sizing: content-box;
+  background-color: #00ffc1;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const TextLabel4 = styled.button`
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: flex-end;
+  align-items: center;
+  margin: 0px 0px 18px 0px;
+  padding: 0px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: SF Pro;
+  line-height: 24px;
+  white-space: nowrap;
+  border-width: 0px;
+  border-radius: 4px;
+  box-sizing: content-box;
+  background-color: #ec4899;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const VotingForumRootRootRoot = styled.div`
+  width: 1145px;
+  
+  gap: 78px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 46px 67px 46px 300px;
+  background-color: #000000;
+  overflow: hidden;
+`;
+const TextLabel8 = styled.button`
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: SF Pro;
+  line-height: 36px;
+  white-space: nowrap;
+  border-width: 0px;
+  border-radius: 76px;
+  border-top-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
+  border-style: solid;
+  border-color: #06b6d4;
+  box-sizing: content-box;
+  background-color: #06b6d4;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const FlexColumn = styled.div`
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: stretch;
+  padding: 0px 233px 0px 0px;
+`;
