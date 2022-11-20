@@ -11,8 +11,8 @@ function App() {
   const network = useNetwork();
   console.log("Welcome Address: ", address);
 
-  const editionDropAddress = "0xf9cd13891F1f6420F9AaD6eA413001A1EE519383";
-  const { contract: token } = useContract("0x66E1aBF1845a6447919ea1F229eEB4D8d43a0d35", "token");
+  const editionDropAddress = "0xa8B4066b511Ac514c5d7089dc67Ce6A7bADd0EA8";
+  const { contract: token } = useContract("0x15E0508363110be4a9786814a050caB0F4dC3074", "token");
   const { contract: vote } = useContract("0x84036E1a30Fb329db2ec5660DD8e0Dc44af1eB45", "vote");
   const { contract: editionDrop } = useContract(editionDropAddress, "edition-drop");
 
