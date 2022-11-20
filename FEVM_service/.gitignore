@@ -22,8 +22,6 @@ lib-cov
 coverage
 *.lcov
 
-.DS_Store
-
 # nyc test coverage
 .nyc_output
 
@@ -66,6 +64,8 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+
+.DS_Store
 
 # Yarn Integrity file
 .yarn-integrity
